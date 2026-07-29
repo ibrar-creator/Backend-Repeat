@@ -1,0 +1,415 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: #f8fafc;
+  padding: 30px;
+  color: #1f2937;
+}
+
+
+/* Main Layout */
+
+.container {
+  max-width: 1300px;
+  margin: auto;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+
+/* Left Side */
+
+.left {
+  width: 35%;
+  position: sticky;
+  top: 30px;
+}
+
+
+.left h1,
+.right h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+
+/* Create Note Form */
+
+.note-create-form {
+
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 12px;
+
+  border: 1px solid #e5e7eb;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+
+}
+
+
+
+.note-create-form input,
+.note-create-form textarea,
+.note-create-form select {
+
+  width: 100%;
+
+  padding: 13px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  outline: none;
+
+}
+
+
+
+.note-create-form textarea {
+
+  min-height: 150px;
+
+  resize: vertical;
+
+}
+
+
+
+.note-create-form input:focus,
+.note-create-form textarea:focus,
+.note-create-form select:focus {
+
+  border-color: #2563eb;
+
+}
+
+
+
+/* Create Button */
+
+.note-create-form button {
+
+  padding: 13px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+}
+
+
+
+.note-create-form button:hover {
+
+  background: #1d4ed8;
+
+}
+
+
+
+/* Right Side */
+
+.right {
+
+  width: 65%;
+
+}
+
+
+
+/* Notes Full Width */
+
+.notes {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+}
+
+
+
+/* Note Card */
+
+.note {
+
+  width: 100%;
+
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+  border: 1px solid #e5e7eb;
+
+  transition: 0.3s;
+
+}
+
+
+
+.note:hover {
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
+}
+
+
+
+/* Note Title */
+
+.note h2 {
+
+  font-size: 22px;
+
+  color: #111827;
+
+  margin-bottom: 12px;
+
+}
+
+
+
+/* Note Description */
+
+.note p {
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 8px;
+  color: #4b5563;
+  line-height: 1.7;
+
+  white-space: pre-line;
+  word-wrap: break-word;
+
+  height: 150px;
+  overflow-y: auto;
+
+  margin-bottom: 15px;
+}
+
+
+/* Scrollbar Design */
+
+.note p::-webkit-scrollbar {
+  width: 6px;
+}
+
+.note p::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.note p::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 10px;
+}
+
+.note p::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+
+
+/* Information Horizontal */
+
+.note-info {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+
+}
+
+
+
+.note-info span {
+
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+
+
+/* Category */
+
+.note-info span:nth-child(1) {
+
+  background: #dbeafe;
+
+  color: #2563eb;
+
+}
+
+
+/* Priority */
+
+.note-info span:nth-child(2) {
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+}
+
+
+/* Tags */
+
+.note-info span:nth-child(3) {
+
+  background: #dcfce7;
+
+  color: #16a34a;
+
+}
+
+
+/* Date */
+
+.note-info span:nth-child(4) {
+
+  background: #fef3c7;
+
+  color: #d97706;
+
+}
+
+
+
+/* Buttons */
+
+.btns {
+
+  display: flex;
+
+  gap: 12px;
+
+}
+
+
+
+.btns button {
+
+  flex: 1;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+}
+
+
+
+/* Update */
+
+.update-btn {
+
+  background: #16a34a;
+
+}
+
+
+.update-btn:hover {
+
+  background: #15803d;
+
+}
+
+
+
+/* Delete */
+
+.delete-btn {
+
+  background: #dc2626;
+
+}
+
+
+.delete-btn:hover {
+
+  background: #b91c1c;
+
+}
+
+
+
+/* Responsive */
+
+@media(max-width:900px) {
+
+  body {
+    padding: 20px;
+  }
+
+
+  .container {
+
+    flex-direction: column;
+
+  }
+
+
+  .left,
+  .right {
+
+    width: 100%;
+
+  }
+
+
+  .left {
+
+    position: static;
+
+  }
+
+}
