@@ -7,5 +7,6 @@ const postRouter = express.Router();
 
 postRouter.post("/", upload.single("image"),identifyuser, postController.createPostController);
 postRouter.get("/",identifyuser, postController.getPostController);
-postRouter.get("/details/:postId", identifyuser, postController.getPostDetailsController)
+postRouter.get("/details/:postId", identifyuser, postController.getPostDetailsController);
+postRouter.post("/like/:postId", identifyuser, postController.likePostController);
 export default postRouter;

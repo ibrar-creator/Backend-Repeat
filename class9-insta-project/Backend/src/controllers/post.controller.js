@@ -3,6 +3,7 @@ import ImageKit from "@imagekit/nodejs";
 import { toFile } from "@imagekit/nodejs";
 import jwt from "jsonwebtoken";
 import identifyuser from "../middlewares/auth.middleware.js";
+import likeModel from "../models/like.model.js";
 const imagekit = new ImageKit({
   privateKey: process.env["IMAGEKIT_PRIVATE_KEY"], // This is the default and can be omitted
 });
@@ -59,8 +60,28 @@ async function getPostDetailsController(req, res) {
     post,
   });
 }
+async function likePostController(req, res) {
+  const userId = req.user.userId || req.user.id;
+  const postId = req.params.postId;
+  const post = await postModel.findById(postId);
+  if (!post) {
+    return res.status(404).json({
+      message: "Post not found.",
+    });
+  }
+  const like = await likeModel.create({
+    post: postId,
+    user: userId,
+  });
+
+  res.status(201).json({
+    message: "Post liked successfully",
+    like,
+  });
+}
 export default {
   createPostController,
   getPostController,
   getPostDetailsController,
+  likePostController,
 };
