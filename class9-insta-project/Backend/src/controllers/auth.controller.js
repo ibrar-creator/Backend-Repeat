@@ -22,7 +22,7 @@ export async function registerController(req, res) {
 
   const isUserAlreadyExists = await userModel.findOne({
     $or: [{ username }, { email }],
-  });
+  })
 
   if (isUserAlreadyExists) {
     return res.status(409).json({
@@ -43,7 +43,12 @@ export async function registerController(req, res) {
   const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+  });
 
   res.status(201).json({
     message: "User registered successfully",
@@ -68,7 +73,7 @@ export async function loginController(req, res) {
         email: email,
       },
     ],
-  });
+  }).select("+password");
 
   if (!user) {
     return res.status(409).json({
@@ -86,10 +91,34 @@ export async function loginController(req, res) {
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+  });
 
   res.status(200).json({
     message: "Login successful",
+    user: {
+      username: user.username,
+      email: user.email,
+      bio: user.bio,
+      profileImage: user.profileImage,
+    },
+  });
+}
+
+export async function getMeController(req, res) {
+  const user = await userModel.findById(req.user.userId);
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+    });
+  }
+
+  res.status(200).json({
     user: {
       username: user.username,
       email: user.email,

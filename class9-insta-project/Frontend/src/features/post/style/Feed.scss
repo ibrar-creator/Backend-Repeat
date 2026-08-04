@@ -1,0 +1,230 @@
+@use 'sass:color';
+
+$bg-color: #ffffff;
+$border-color: #dbdbdb;
+$text-primary: #262626;
+$text-secondary: #8e8e8e;
+$btn-blue: #0095f6;
+$btn-blue-hover: #1877f2;
+$whatsapp-green: #25d366;
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fafafa;
+  font-family: $font-family;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.insta-post {
+  background: $bg-color;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  max-width: 470px;
+  width: 100%;
+  overflow: hidden;
+
+  // Header
+  .post-header {
+    @include flex-between;
+    padding: 12px 16px;
+
+    .user-info {
+      @include flex-center;
+      gap: 12px;
+
+      .avatar-story-ring {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        padding: 2px;
+        @include flex-center;
+        justify-content: center;
+
+        .avatar {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 2px solid #fff;
+          object-fit: cover;
+        }
+      }
+
+      .user-details {
+        display: flex;
+        flex-direction: column;
+
+        .username {
+          font-weight: 600;
+          font-size: 14px;
+          color: $text-primary;
+          line-height: 18px;
+        }
+
+        .location {
+          font-size: 12px;
+          color: $text-secondary;
+          line-height: 14px;
+        }
+      }
+    }
+
+    .header-actions {
+      @include flex-center;
+      gap: 12px;
+
+      .follow-btn {
+        background-color: $btn-blue;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 7px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.15s ease, opacity 0.15s ease;
+
+        &:hover {
+          background-color: $btn-blue-hover;
+        }
+
+        &:active {
+          opacity: 0.7;
+        }
+      }
+
+      .more-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: $text-primary;
+        padding: 4px;
+        display: flex;
+
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+
+  // Media
+  .post-media {
+    width: 100%;
+    background-color: #000;
+    line-height: 0;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  // Footer
+  .post-footer {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .post-actions {
+      @include flex-between;
+
+      .left-actions {
+        @include flex-center;
+        gap: 16px;
+
+          .like{
+        color: red;
+      }
+      }
+    
+      .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        color: $text-primary;
+        transition: transform 0.1s ease, color 0.15s ease;
+
+        &:hover {
+          opacity: 0.6;
+        }
+
+        &:active {
+          transform: scale(0.9);
+        }
+
+        // WhatsApp specific styling
+        &.whatsapp-btn {
+          &:hover {
+            color: $whatsapp-green;
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .post-likes {
+      font-size: 14px;
+      color: $text-primary;
+
+      strong {
+        font-weight: 600;
+      }
+    }
+
+    .post-caption {
+      font-size: 14px;
+      color: $text-primary;
+      line-height: 18px;
+
+      .username {
+        font-weight: 600;
+        margin-right: 6px;
+      }
+
+      .hashtag {
+        color: #00376b;
+        cursor: pointer;
+      }
+    }
+
+    .view-comments {
+      font-size: 14px;
+      color: $text-secondary;
+      text-decoration: none;
+
+      &:hover {
+        color: color.mix($text-secondary, #000, 70%);
+      }
+    }
+
+    .post-time {
+      font-size: 10px;
+      letter-spacing: 0.2px;
+      color: $text-secondary;
+      text-transform: uppercase;
+    }
+  }
+}

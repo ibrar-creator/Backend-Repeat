@@ -1,4 +1,5 @@
 import postModel from "../models/post.model.js";
+import userModel from "../models/user.model.js";
 import ImageKit from "@imagekit/nodejs";
 import { toFile } from "@imagekit/nodejs";
 import jwt from "jsonwebtoken";
@@ -79,9 +80,43 @@ async function likePostController(req, res) {
     like,
   });
 }
+async function getFeedController(req, res) {
+  try {
+    const userId = req.user.userId || req.user.id;
+
+    // 1. Database se tamam posts fetch karein
+    const posts = await postModel.find().populate("user").lean();
+
+    // 2. Har post par async operation chala kar Promise.all ko await karein
+    const feed = await Promise.all(
+      posts.map(async (post) => {
+        const isLiked = await likeModel.findOne({
+          user: userId, // req.user se mili hui ID
+          post: post._id,
+        });
+
+        // isLiked ka boolean check (true/false)
+        post.isLiked = !!isLiked;
+
+        return post;
+      })
+    );
+
+    res.status(200).json({
+      message: "Feed fetched successfully",
+      posts: feed,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching feed",
+      error: error.message,
+    });
+  }
+}
 export default {
   createPostController,
   getPostController,
   getPostDetailsController,
   likePostController,
+  getFeedController,
 };
