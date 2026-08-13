@@ -1,29 +1,10 @@
-// usePost.js
-import { useState, useEffect } from 'react';
-import { getFeed } from '/src/features/post/services/post.api.js';
+import { useContext } from "react";
+import { PostContext } from "../post.context.jsx";
 
-export const usePost = (enabled = true) => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(enabled);
-
-  useEffect(() => {
-    if (!enabled) {
-      setPosts([]);
-      setLoading(false);
-      return;
-    }
-
-    getFeed()
-      .then((data) => {
-        console.log('API Response:', data);
-        setPosts(Array.isArray(data) ? data : []);
-      })
-      .catch((err) => {
-        console.error('Failed to fetch posts:', err);
-        setPosts([]);
-      })
-      .finally(() => setLoading(false));
-  }, [enabled]);
-
-  return { posts, loading };
+export const usePost = () => {
+  const context = useContext(PostContext);
+  if (!context) {
+    throw new Error("usePost must be used within PostContextProvider");
+  }
+  return context;
 };

@@ -4,10 +4,10 @@ import { useAuth } from "../../auth/hooks/useAuth.jsx";
 import { Link } from "react-router";
 import Post from "../components/Post.jsx";
 import "../style/Feed.scss";
-
+import Nav from "../../shared/components/Nav.jsx";
 const Feed = () => {
   const { isAuthenticated, loading: authLoading } = useAuth();
-  const { posts, loading: postsLoading } = usePost(isAuthenticated);
+  const { posts, loading: postsLoading } = usePost();
 
   if (authLoading) return <div>Checking authentication...</div>;
   if (!isAuthenticated) {
@@ -27,6 +27,7 @@ const Feed = () => {
       {posts.map((post) => (
         <Post key={post._id || post.id} post={post} />
       ))}
+      <Nav />
     </div>
   );
 };

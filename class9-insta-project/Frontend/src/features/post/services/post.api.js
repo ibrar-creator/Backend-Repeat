@@ -1,11 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3000/api/posts",
-    withCredentials: true,
+  baseURL: "http://localhost:3000/api/posts",
+  withCredentials: true,
 });
 
 export async function getFeed() {
-    const response = await api.get("/feed");
-    return response.data.posts;
+  const response = await api.get("/feed");
+  return response.data.posts ?? [];
+}
+
+export async function createPost(formData) {
+  const response = await api.post("/", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return response.data.post ?? response.data;
 }

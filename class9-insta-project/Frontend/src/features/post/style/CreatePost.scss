@@ -1,0 +1,239 @@
+// ==========================================================================
+// CreatePost.scss — Instagram-style "Create new post" card
+// ==========================================================================
+
+$ig-bg: #000000;
+$ig-card-bg: #000000;
+$ig-white: #ffffff;
+$ig-gray-text: #a8a8a8;
+$ig-gray-border: #363636;
+$ig-input-bg: #000000;
+$ig-blue: #1877f2;
+$ig-blue-disabled: #0a3a6e;
+$ig-placeholder-bg: #121212;
+
+$font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif;
+
+@mixin center-flex($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+}
+
+// -------------------------
+// Page wrapper
+// -------------------------
+.create-post-page {
+  min-height: 100vh;
+  background-color: $ig-bg;
+  color: $ig-white;
+  font-family: $font-stack;
+  padding-bottom: 60px; // room for bottom Nav on mobile
+}
+
+.create-post-container {
+  @include center-flex();
+  padding: 60px 20px;
+  margin-left: 245px; // matches .with-insta-nav sidebar offset
+
+  @media (max-width: 1000px) {
+    margin-left: 72px;
+  }
+
+  @media (max-width: 700px) {
+    margin-left: 0;
+    padding: 24px 12px 90px;
+  }
+}
+
+// -------------------------
+// Card
+// -------------------------
+.create-post-card {
+  width: 100%;
+  max-width: 700px;
+  background-color: $ig-card-bg;
+  border: 1px solid $ig-gray-border;
+  border-radius: 12px;
+  overflow: hidden;
+
+  @media (max-width: 700px) {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid $ig-gray-border;
+
+  h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+  }
+
+  .share-btn {
+    background: none;
+    border: none;
+    color: $ig-blue;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+
+    &:hover:not(:disabled) {
+      color: #66a8ff;
+    }
+
+    &:disabled {
+      color: $ig-blue-disabled;
+      cursor: default;
+    }
+  }
+}
+
+.card-body {
+  display: flex;
+  min-height: 420px;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    min-height: auto;
+  }
+}
+
+// -------------------------
+// Media upload area (left)
+// -------------------------
+.media-upload-area {
+  flex: 1.1;
+  border-right: 1px solid $ig-gray-border;
+  background-color: $ig-placeholder-bg;
+  @include center-flex();
+  min-height: 420px;
+
+  @media (max-width: 700px) {
+    border-right: none;
+    border-bottom: 1px solid $ig-gray-border;
+    min-height: 320px;
+  }
+
+  .upload-placeholder {
+    @include center-flex(column);
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    padding: 40px;
+    text-align: center;
+
+    &::before {
+      content: "";
+      width: 64px;
+      height: 64px;
+      background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5'><rect x='2' y='4' width='20' height='16' rx='3'/><circle cx='9' cy='10' r='2'/><path d='m21 15-5-5-9 9'/></svg>")
+        center / contain no-repeat;
+    }
+
+    span {
+      color: $ig-white;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  }
+
+  .image-preview-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+
+    @media (max-width: 700px) {
+      min-height: 320px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .remove-img-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: $ig-white;
+      font-size: 14px;
+      cursor: pointer;
+      @include center-flex();
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+}
+
+// -------------------------
+// Post details (right)
+// -------------------------
+.post-details-area {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+
+  .caption-input {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 120px;
+    resize: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $ig-white;
+    font-size: 14px;
+    font-family: $font-stack;
+    line-height: 1.5;
+
+    &::placeholder {
+      color: $ig-gray-text;
+    }
+  }
+
+  .location-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    border-top: 1px solid $ig-gray-border;
+    outline: none;
+    color: $ig-white;
+    font-size: 14px;
+
+    &::placeholder {
+      color: $ig-gray-text;
+    }
+  }
+}

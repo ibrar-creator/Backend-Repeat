@@ -65,19 +65,40 @@ async function likePostController(req, res) {
   const userId = req.user.userId || req.user.id;
   const postId = req.params.postId;
   const post = await postModel.findById(postId);
+
   if (!post) {
     return res.status(404).json({
       message: "Post not found.",
     });
   }
-  const like = await likeModel.create({
+
+  const existingLike = await likeModel.findOne({
     post: postId,
     user: userId,
   });
 
+  if (existingLike) {
+    await likeModel.findByIdAndDelete(existingLike._id);
+    const likesCount = await likeModel.countDocuments({ post: postId });
+
+    return res.status(200).json({
+      message: "Post disliked successfully",
+      isLiked: false,
+      likesCount,
+    });
+  }
+
+  await likeModel.create({
+    post: postId,
+    user: userId,
+  });
+
+  const likesCount = await likeModel.countDocuments({ post: postId });
+
   res.status(201).json({
     message: "Post liked successfully",
-    like,
+    isLiked: true,
+    likesCount,
   });
 }
 async function getFeedController(req, res) {
@@ -91,12 +112,13 @@ async function getFeedController(req, res) {
     const feed = await Promise.all(
       posts.map(async (post) => {
         const isLiked = await likeModel.findOne({
-          user: userId, // req.user se mili hui ID
+          user: userId,
           post: post._id,
         });
+        const likesCount = await likeModel.countDocuments({ post: post._id });
 
-        // isLiked ka boolean check (true/false)
         post.isLiked = !!isLiked;
+        post.likesCount = likesCount;
 
         return post;
       })

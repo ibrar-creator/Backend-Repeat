@@ -1,0 +1,268 @@
+// ==========================================================================
+// Profile.scss — Instagram-style profile page
+// ==========================================================================
+
+$ig-bg: #000000;
+$ig-white: #ffffff;
+$ig-gray-text: #a8a8a8;
+$ig-gray-border: #262626;
+$ig-blue: #4599ff;
+
+$font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif;
+
+@mixin center-flex($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-page {
+  min-height: 100vh;
+  background-color: $ig-bg;
+  color: $ig-white;
+  font-family: $font-stack;
+  margin-left: 245px;
+  padding: 40px 24px 90px;
+  max-width: 935px;
+
+  @media (max-width: 1000px) {
+    margin-left: 72px;
+  }
+
+  @media (max-width: 700px) {
+    margin-left: 0;
+    padding: 20px 12px 90px;
+  }
+}
+
+.status-text {
+  color: $ig-gray-text;
+  font-size: 14px;
+  text-align: center;
+  padding: 30px 0;
+  grid-column: 1 / -1;
+}
+
+// -------------------------
+// Header
+// -------------------------
+.profile-header {
+  display: flex;
+  gap: 80px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid $ig-gray-border;
+  margin-bottom: 24px;
+
+  @media (max-width: 700px) {
+    gap: 24px;
+  }
+
+  .profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+
+    @media (max-width: 700px) {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 8px;
+
+    @media (max-width: 700px) {
+      gap: 10px;
+    }
+  }
+
+  .profile-top-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    .edit-profile-btn,
+    .follow-btn {
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .edit-profile-btn {
+      background: transparent;
+      border: 1px solid $ig-gray-border;
+      color: $ig-white;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    .follow-btn {
+      background-color: #1877f2;
+      border: none;
+      color: $ig-white;
+
+      &:hover {
+        background-color: #1567d3;
+      }
+
+      &.following {
+        background: transparent;
+        border: 1px solid $ig-gray-border;
+        color: $ig-white;
+
+        &:hover {
+          background-color: rgba(237, 73, 86, 0.1);
+          border-color: rgba(237, 73, 86, 0.5);
+          color: #ed4956;
+        }
+      }
+    }
+  }
+
+  .profile-stats {
+    display: flex;
+    gap: 32px;
+    font-size: 15px;
+
+    @media (max-width: 700px) {
+      gap: 20px;
+      font-size: 13px;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  .profile-bio {
+    h4 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 4px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: $ig-white;
+      white-space: pre-line;
+    }
+
+    a {
+      font-size: 14px;
+      color: $ig-blue;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// -------------------------
+// Tabs
+// -------------------------
+.profile-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  border-top: 1px solid $ig-gray-border;
+  margin-bottom: 4px;
+
+  @media (max-width: 700px) {
+    gap: 30px;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    border-top: 1px solid transparent;
+    margin-top: -1px;
+    padding: 14px 4px;
+    color: $ig-gray-text;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &.active {
+      color: $ig-white;
+      border-top-color: $ig-white;
+    }
+
+    &:hover {
+      color: $ig-white;
+    }
+  }
+}
+
+// -------------------------
+// Post grid
+// -------------------------
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-top: 4px;
+
+  .grid-tile {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .grid-tile-overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: $ig-white;
+        font-weight: 600;
+        font-size: 15px;
+      }
+    }
+
+    &:hover .grid-tile-overlay {
+      opacity: 1;
+    }
+  }
+}

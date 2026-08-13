@@ -1,0 +1,293 @@
+// ==========================================================================
+// Reels.scss — Instagram Reels-style full-screen post
+// Uses the exact same class names as Post.jsx, no JSX changes needed
+// ==========================================================================
+
+$ig-bg: #000000;
+$ig-white: #ffffff;
+$ig-gray-text: #d4d4d4;
+$ig-red: #ed4956;
+$ig-blue: #4599ff;
+
+$font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif;
+
+@mixin center-flex($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+}
+
+// -------------------------
+// Reels feed wrapper
+// Each .insta-post fills the viewport and snaps like TikTok/Reels
+// -------------------------
+.reels-feed {
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  margin-left: 245px; // matches .insta-nav sidebar width
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 1000px) {
+    margin-left: 72px;
+  }
+
+  @media (max-width: 700px) {
+    margin-left: 0;
+  }
+}
+
+.insta-post {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  max-width: 470px;
+  margin: 2rem auto;
+  scroll-snap-align: start;
+  background-color: $ig-bg;
+  color: $ig-white;
+  font-family: $font-stack;
+  overflow: hidden;
+
+  // -------------------------
+  // Media fills the entire card
+  // -------------------------
+  .post-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    // subtle gradient so overlaid text/icons stay readable
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35) 0%,
+        transparent 18%,
+        transparent 55%,
+        rgba(0, 0, 0, 0.75) 100%
+      );
+      pointer-events: none;
+    }
+  }
+
+  // -------------------------
+  // Header — overlaid at the top
+  // -------------------------
+  .post-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 14px;
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .avatar-story-ring {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        padding: 2px;
+        background: linear-gradient(
+          45deg,
+          #feda75,
+          #fa7e1e,
+          #d62976,
+          #962fbf,
+          #4f5bd5
+        );
+        @include center-flex();
+
+        .avatar {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 2px solid $ig-bg;
+          object-fit: cover;
+        }
+      }
+
+      h4 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: $ig-white;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      }
+
+      p {
+        margin: 0;
+        font-size: 11px;
+        color: $ig-gray-text;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .follow-btn {
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 6px;
+        padding: 4px 10px;
+        color: $ig-white;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      .more-btn {
+        background: none;
+        border: none;
+        color: $ig-white;
+        cursor: pointer;
+        display: flex;
+        padding: 0;
+        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+
+        svg {
+          fill: currentColor;
+        }
+      }
+    }
+  }
+
+  // -------------------------
+  // Footer — bottom overlay: caption on the left,
+  // action rail stacked vertically on the right
+  // -------------------------
+  .post-footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 12px 20px 14px;
+    gap: 12px;
+
+    // reorder into: caption/meta stack (left) + action rail (right)
+    display: grid;
+    grid-template-columns: 1fr 56px;
+    align-items: end;
+
+    .post-caption,
+    .post-likes,
+    .view-comments,
+    time {
+      grid-column: 1;
+    }
+
+    .post-actions {
+      grid-column: 2;
+      grid-row: 1 / -1;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+
+      .left-actions {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .action-btn {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color: $ig-white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+
+        svg {
+          stroke: currentColor;
+          fill: none;
+          width: 26px;
+          height: 26px;
+
+          &.like {
+            animation: like-pop 0.25s ease;
+          }
+        }
+
+        &:hover {
+          opacity: 0.75;
+        }
+      }
+    }
+
+    .post-caption {
+      font-size: 13px;
+      line-height: 1.4;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+      margin-bottom: 6px;
+
+      .username {
+        font-weight: 600;
+        margin-right: 4px;
+      }
+
+      .hashtag {
+        color: $ig-blue;
+      }
+    }
+
+    .post-likes {
+      display: none; // Reels shows like *count* on the icon, not this line
+    }
+
+    .view-comments {
+      display: none; // comments open in a drawer on real Reels, not a link
+    }
+
+    time {
+      display: none; // Reels doesn't show a timestamp in the overlay
+    }
+  }
+}
+
+@keyframes like-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
