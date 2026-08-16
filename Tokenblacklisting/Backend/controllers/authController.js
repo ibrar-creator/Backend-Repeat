@@ -15,33 +15,32 @@ const {
 // ------------------------------------------------------------------
 // REGISTER
 // ------------------------------------------------------------------
-async function register(req, res) {
+async function register(req, res, next) {
   try {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!username || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({
-        error: "Username aur password zaroori hai",
+        error: "Username, email aur password zaroori hain",
       });
     }
 
-    const existingUser =
-      await userStore.findByUsername(username);
+    const existingUserByEmail = await userStore.findByEmail(email);
+    const existingUserByUsername = await userStore.findByUsername(username);
 
-    if (existingUser) {
+    if (existingUserByEmail || existingUserByUsername) {
       return res.status(409).json({
-        error: "Ye username pehle se use ho raha hai",
+        error: "Ye username ya email pehle se use ho raha hai",
       });
     }
 
-    const hashedPassword =
-      await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser =
-      await userStore.createUser({
-        username,
-        hashedPassword,
-      });
+    const newUser = await userStore.createUser({
+      username,
+      email,
+      hashedPassword,
+    });
 
     // Automatically login
     const accessToken =
@@ -75,11 +74,8 @@ async function register(req, res) {
     });
 
   } catch (error) {
-    console.error(error);
-
-    return res.status(500).json({
-      error: "Registration failed",
-    });
+    console.error("Register error:", error);
+    return next(error);
   }
 }
 
@@ -88,19 +84,19 @@ async function register(req, res) {
 // ------------------------------------------------------------------
 async function login(req, res) {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password) {
+    if (!email || !password) {
       return res.status(400).json({
         error: "Username aur password zaroori hai",
       });
     }
 
-    const user = await userStore.findByUsername(username);
+    const user = await userStore.findByEmail(email);
 
     if (!user) {
       return res.status(401).json({
-        error: "Galat username ya password",
+        error: "Galat email ya password",
       });
     }
 

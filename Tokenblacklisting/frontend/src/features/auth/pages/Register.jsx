@@ -7,6 +7,7 @@ function Register() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
@@ -15,6 +16,7 @@ function Register() {
     try {
       const data = await registerUser({
         username,
+        email,
         password,
       });
      navigate("/", { replace: true });
@@ -61,6 +63,22 @@ function Register() {
               value={username}
               onChange={(e) =>
                 setUsername(e.target.value)
+              }
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="email">
+              Email
+            </label>
+
+            <input
+              id="email"
+              type="text"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
               }
               required
             />

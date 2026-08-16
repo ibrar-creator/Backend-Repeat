@@ -6,6 +6,7 @@ const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const errorHandler = require("./middleware/errorHandler")
 const app = express();
 
 // Enable CORS before any routes so preflight requests succeed
@@ -32,7 +33,7 @@ app.get("/api/profile", authMiddleware, (req, res) => {
     user: req.user,
   });
 });
-
+app.use(errorHandler)
 app.listen(process.env.PORT || 3000, () => {
   console.log(`🚀 Server chal raha hai: http://localhost:${process.env.PORT || 3000}`);
 });

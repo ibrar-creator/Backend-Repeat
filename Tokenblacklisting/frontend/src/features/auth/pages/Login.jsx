@@ -6,7 +6,7 @@ import "../style/login.css";
 function Login() {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
@@ -14,7 +14,7 @@ function Login() {
 
     try {
       const data = await loginUser({
-        username,
+        email,
         password,
       });
 
@@ -50,17 +50,17 @@ function Login() {
         >
 
           <div className="input-group">
-            <label htmlFor="username">
-              Username
+            <label htmlFor="email">
+              Email
             </label>
 
             <input
-              id="username"
+              id="email"
               type="text"
-              placeholder="Enter your username"
-              value={username}
+              placeholder="Enter your email"
+              value={email}
               onChange={(e) =>
-                setUsername(e.target.value)
+                setEmail(e.target.value)
               }
               required
             />
