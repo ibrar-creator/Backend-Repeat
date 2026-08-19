@@ -82,7 +82,7 @@ async function register(req, res, next) {
 // ------------------------------------------------------------------
 // LOGIN
 // ------------------------------------------------------------------
-async function login(req, res) {
+async function login(req, res, next) {
   try {
     const { email, password } = req.body;
 
@@ -135,7 +135,7 @@ async function login(req, res) {
       message: "Login successful",
     });
   } catch (error) {
-    console.error("Login error:", error);
+    return next(error)
 
     res.status(500).json({
       error: "Login failed",
