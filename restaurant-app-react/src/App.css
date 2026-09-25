@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fafafa;
+  color: #222;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+}
+
+main {
+  width: 100%;
+}

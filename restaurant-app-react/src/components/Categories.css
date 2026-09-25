@@ -1,0 +1,135 @@
+.categories {
+  padding: 70px 7%;
+  background: white;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-heading .subtitle {
+  color: #e63946;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.section-heading h2 {
+  font-size: 42px;
+  color: #222;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.category-card {
+  background: linear-gradient(135deg, #f8f8f8, #fff);
+  border-radius: 14px;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.category-card:hover {
+  background: linear-gradient(135deg, #fff, #fafafa);
+  box-shadow: 0 12px 32px rgba(230, 57, 70, 0.15);
+  transform: translateY(-6px);
+  border-color: #e63946;
+}
+
+.category-card.active {
+  background: linear-gradient(135deg, #fff, #fff);
+  border-color: #e63946;
+  box-shadow: 0 12px 32px rgba(230, 57, 70, 0.25);
+  transform: scale(1.02);
+}
+
+.category-icon {
+  font-size: 56px;
+  margin-bottom: 12px;
+  display: inline-block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.category-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #222;
+  font-weight: 700;
+}
+
+.category-card p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
+}
+
+@media (max-width: 1024px) {
+  .categories {
+    padding: 50px 5%;
+  }
+
+  .section-heading h2 {
+    font-size: 32px;
+  }
+
+  .category-grid {
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .categories {
+    padding: 40px 4%;
+  }
+
+  .section-heading h2 {
+    font-size: 26px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+  }
+
+  .category-card {
+    padding: 20px 15px;
+  }
+
+  .category-icon {
+    font-size: 44px;
+  }
+
+  .category-card h3 {
+    font-size: 14px;
+  }
+
+  .category-card p {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .category-icon {
+    font-size: 36px;
+  }
+
+  .category-card h3 {
+    font-size: 12px;
+  }
+}
